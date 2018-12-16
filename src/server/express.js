@@ -2,11 +2,14 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import webpack from 'webpack';
 import webpackHotServerMiddleware from 'webpack-hot-server-middleware';
+import bodyParser from 'body-parser';
 
 import configDevClient from '../../config/webpack.dev-client.js';
 import configDevServer from '../../config/webpack.dev-server.js';
 import configProdClient from '../../config/webpack.prod-client.js';
 import configProdServer from '../../config/webpack.prod-server.js';
+
+import routes from './routes';
 
 const server = express();
 server.use(cookieParser());
@@ -19,6 +22,8 @@ const isDev = !isProd;
 const PORT = process.env.PORT || 8080;
 let isBuilt = false;
 
+
+routes(server);
 server.listen(PORT, () => {
 	isBuilt = true;
 	console.log(
@@ -51,6 +56,8 @@ if (isDev) {
 	server.use(webpackDevMiddleware);
 	server.use(webpackHotMiddlware);
 	server.use(webpackHotServerMiddleware(compiler));
+	server.use(bodyParser.json());
+	server.use(bodyParser.urlencoded({ extended: false }));
 	console.log('Middleware enabled');
 	done();
 } else {

@@ -1,6 +1,6 @@
 module.exports = {
-	name: 'React SSR Boilerplate',
-	short_name: 'Boilerplate',
+	name: 'Officina',
+	short_name: 'Officina',
 	icons: [
 		{
 			src: 'https://i.imgur.com/j2UuUt7.png',
